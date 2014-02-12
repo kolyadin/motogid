@@ -1,0 +1,26 @@
+{
+    "name": "motogid/motogid",
+    "authors": [
+        {
+            "name": "Алексей Колядин",
+            "homepage": "http://motogid.info"
+        }
+    ],
+    "require": {
+        "php"             : ">=5.4.0",
+        "twig/twig"       : "1.*"   ,
+        "slim/slim"       : "2.*"   ,
+        "slim/views"      : "dev-master",
+        "doctrine/common" : "2.4.*" ,
+        "doctrine/dbal"   : "2.4.*" ,
+        "doctrine/orm"    : "2.4.*" ,
+        "phpunit/phpunit" : "3.7.*" ,
+        "phpunit/dbunit"  : "1.2.3" ,
+        "symfony/console" : "2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "motogid\\": ""
+        }
+    }
+}
