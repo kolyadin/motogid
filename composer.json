@@ -16,7 +16,9 @@
         "doctrine/orm"    : "2.4.*" ,
         "phpunit/phpunit" : "3.7.*" ,
         "phpunit/dbunit"  : "1.2.3" ,
-        "symfony/console" : "2.*"
+        "symfony/console" : "2.*",
+
+        "electrolinux/phpquery": "dev-master"
     },
     "autoload": {
         "psr-4": {

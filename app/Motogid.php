@@ -2,6 +2,9 @@
 
 namespace motogid\app;
 
+use motogid\app\controllers\NewsController;
+use motogid\app\controllers\PartsController;
+
 class Motogid extends Application {
 
 	public function __construct() {
@@ -15,9 +18,16 @@ class Motogid extends Application {
 			'templates.path' => '../templates'
 		]);
 
+
 	}
 
 	public function setRoutes() {
+
+		$this->registerController(new NewsController());
+//		$this->registerController(new PartsController());
+
+
+
 
 		$this->get('/', function () {
 			$this->view()->display('Front.twig');

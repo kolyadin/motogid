@@ -2,6 +2,23 @@
 
 namespace motogid\app\controllers;
 
-class CommonController {
+use motogid\app\Application;
+use Slim\Slim;
+
+/**
+ * Class CommonController
+ * @package motogid\app\controllers
+ */
+abstract class CommonController {
+
+	/**
+	 * @return Application
+	 */
+	protected function getApp(){
+
+		return Slim::getInstance();
+
+//		return self::$app;
+	}
 
 }
