@@ -8,12 +8,12 @@ use Slim\Slim;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
 
-ini_set('display_errors',true);
+ini_set('display_errors', true);
 error_reporting(E_ALL);
 
 class Application extends Slim {
 
-	public function __construct($settings){
+	public function __construct($settings) {
 
 		parent::__construct($settings);
 
@@ -42,7 +42,7 @@ class Application extends Slim {
 
 	}
 
-	protected function registerController(ControllerInterface $controllerObject){
+	protected function registerController(ControllerInterface $controllerObject) {
 
 		$controllerObject->registerRoutes();
 

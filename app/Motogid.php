@@ -15,7 +15,7 @@ class Motogid extends Application {
 		]);
 
 		$this->connectTemplateEngine([
-			'templates.path' => '../templates'
+			'templates.path' => __DIR__ . '/../templates/site'
 		]);
 
 
@@ -23,8 +23,7 @@ class Motogid extends Application {
 
 	public function setRoutes() {
 
-		$this->registerController(new NewsController());
-//		$this->registerController(new PartsController());
+		$this->registerController(new \motogid\app\controllers\site\NewsController());
 
 
 

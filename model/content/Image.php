@@ -39,6 +39,13 @@ class Image implements EntityInterface {
 	 */
 	private $name;
 
+	/**
+	 * Название изображения
+	 *
+	 * @Column(type="string", length=50)
+	 */
+	private $path;
+
 
 	public function __construct() {
 		$this->createdAt = time();
@@ -57,8 +64,28 @@ class Image implements EntityInterface {
 		return $this->name;
 	}
 
+	public function getPath(){
+		return $this->path;
+	}
+
+	public function getFilePath(){
+		return ImageFactory::getUploadPath($this->createdAt) . $this->getPath();
+	}
+
+	public function getUrl(){
+		return implode('/',[
+			'/upload',
+			ImageFactory::getDatePath($this->createdAt),
+			$this->getPath()
+		]);
+	}
+
 	public function setName($name) {
 		$this->name = $name;
+	}
+
+	public function setPath($path){
+		$this->path = $path;
 	}
 
 	static public function getRepository() {

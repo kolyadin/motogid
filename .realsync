@@ -21,7 +21,10 @@ remote = /data/sites/motogid
 exclude = composer.lock
 exclude = composer.phar
 
-exclude = /vendor**
+exclude = /vendor
+exclude = /vendor/
+exclude = /vendor/*
+exclude = /vendor/**
 exclude = /logs**
 
 exclude = .realsync

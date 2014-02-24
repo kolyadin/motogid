@@ -1,6 +1,9 @@
 <?php
 
-namespace motogid\app\controllers;
+namespace motogid\app\controllers\site;
+
+use motogid\app\controllers\CommonController;
+use motogid\app\controllers\ControllerInterface;
 use motogid\app\helpers\ORMHelper;
 use motogid\model\content\Image;
 use motogid\model\goods\Goods;
@@ -10,10 +13,12 @@ use motogid\model\goods\Goods;
  * @package motogid\app\controllers
  */
 class NewsController extends CommonController implements ControllerInterface {
-
 	public function registerRoutes() {
 
-		$this->getApp()->get('/news(/page:page)', [$this, 'newsList']);
+		$this
+			->getApp()
+			->get('/news(/page:page)', [$this, 'newsList'])
+			->conditions(['page' => '[1-9][0-9]*']);
 
 	}
 
@@ -23,10 +28,9 @@ class NewsController extends CommonController implements ControllerInterface {
 
 		$good = new Goods();
 
-			/*$image = new Image();
-			$image->setName('Фотка 2');
-			$orm->persist($image);*/
-
+		/*$image = new Image();
+		$image->setName('Фотка 2');
+		$orm->persist($image);*/
 
 		$image = Image::getRepository()->findOneById(1);
 
