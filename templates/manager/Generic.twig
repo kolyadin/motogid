@@ -4,17 +4,24 @@
     <meta charset="UTF-8">
     <title></title>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="/manager/st/css/manager.css"/>
 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript" src="/st/res/plupload-2.1.1/js/plupload.full.min.js"></script>
 
     {% block head %}{% endblock %}
 
 </head>
 <body>
-    <ul>
-        <li><a href="/model/create">Модели байков</a></li>
+
+    <ul class="m-main-menu">
+	    <li><a href="/manager/manufacturer/list">Производители</a></li>
+        <li><a href="/manager/model/list">Модели байков</a> (<a href="/manager/model/create">добавить</a>)</li>
     </ul>
+
+    {{ info }}
+
+    <div class="clearfix"></div>
 
 
     {% block content %}{% endblock %}

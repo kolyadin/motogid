@@ -8,9 +8,14 @@ use motogid\app\helpers\ORMHelper;
 use motogid\model\content\Image;
 use motogid\model\content\ImageFactory;
 use motogid\model\goods\Goods;
+use motogid\model\model\Model;
 
 class AjaxController extends CommonController implements ControllerInterface {
 	public function registerRoutes() {
+
+		$this
+			->getApp()
+			->post('/ajax/model/remove', [$this, 'modelRemove']);
 
 		$this
 			->getApp()
@@ -18,7 +23,20 @@ class AjaxController extends CommonController implements ControllerInterface {
 
 	}
 
-	public function plUpload(){
+	public function modelRemove() {
+
+		$orm = ORMHelper::getORM();
+
+		$modelId = $this->getApp()->request()->post('modelId');
+
+		$link = $orm->find('motogid\\model\\model\\Model',$modelId);
+
+		$orm->remove($link);
+		$orm->flush();
+
+	}
+
+	public function plUpload() {
 
 		// Make sure file is not cached (as it happens for example on iOS devices)
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");

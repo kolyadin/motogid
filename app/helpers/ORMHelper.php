@@ -27,6 +27,10 @@ class ORMHelper {
 		return EntityManager::create($config['mysql'], $ORMConfig);
 	}
 
+	/**
+	 * @param $entity
+	 * @return \Doctrine\ORM\EntityRepository
+	 */
 	public static function getRepository($entity){
 
 		return self::getORM()->getRepository($entity);

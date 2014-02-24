@@ -14,11 +14,20 @@ abstract class CommonController {
 	/**
 	 * @return Application
 	 */
-	protected function getApp(){
+	protected function getApp() {
 
 		return Slim::getInstance();
 
-//		return self::$app;
 	}
+
+	protected function appendData(array $vars) {
+		$this->getApp()->view()->appendData($vars);
+	}
+
+	protected function display($template, array $vars = []) {
+		$this->getApp()->view()->appendData($vars);
+		$this->getApp()->view()->display($template);
+	}
+
 
 }

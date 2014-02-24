@@ -1,0 +1,205 @@
+{% extends '/Generic.twig' %}
+
+{% block head %}
+
+	<style type="text/css">
+		.m-model-new fieldset {
+			margin-bottom: 10px;
+		}
+
+		.m-model-images {
+			clear: both;
+		}
+
+		.m-model-images__image {
+			float: left;
+			margin-right: 10px;
+		}
+
+		.m-model-new input {
+			width: 500px;
+			padding: 5px;
+			margin-bottom: 10px;
+			display: block;
+		}
+
+		#m-photo-add {
+			margin-top: 20px;
+		}
+
+		#receiver {
+			width: 100%;
+			height: 200px;
+		}
+	</style>
+
+	<script type="text/javascript">
+		$(function () {
+
+
+			var uploader = new plupload.Uploader({
+				runtimes: 'html5,flash,silverlight,html4',
+				browse_button: $('#m-photo-add').get(0),
+				max_file_size: '10mb',
+				unique_names: true,
+				max_file_count: 2,
+
+				url: "/manager/ajax/pl-upload",
+
+				flash_swf_url: '/st/res/plupload-2.1.1/js/Moxie.swf',
+				silverlight_xap_url: '/st/res/plupload-2.1.1/js/Moxie.xap',
+
+				filters: [
+					{title: "Image files", extensions: "jpg,jpeg,gif,png"},
+				],
+
+				init: {
+					PostInit: function () {
+
+
+					},
+					UploadComplete: function (up, files) {
+
+
+					},
+					BeforeUpload: function (up, file) {
+
+
+					},
+
+					FilesAdded: function (up, files) {
+						up.start();
+					},
+					FileUploaded: function (upldir, file, object) {
+
+						var data = $.parseJSON(object.response);
+
+						$('.m-model-images')
+							  .append('<div class="m-model-images__image"><img src="' + data.path + '" height="100" alt=""/></div>');
+
+
+					},
+
+					UploadProgress: function (up, file) {
+
+					},
+
+					Error: function (up, err) {
+
+					}
+				}
+
+			});
+
+			uploader.bind('FilesAdded', function (up, files) {
+
+				var maxfiles = 10;
+
+				var filesAlready = $('.b-model-images__image').length;
+
+				if (filesAlready >= maxfiles) {
+					return false;
+				}
+
+				var est = (files.length + filesAlready) >= maxfiles ? (maxfiles - (files.length + filesAlready)) : maxfiles;
+
+				files.splice(est);
+
+//				if (up.files.length === maxfiles) {
+//					$('#uploader_browse').hide("slow"); // provided there is only one #uploader_browse on page
+//				}
+
+				up.refresh(); // Reposition Flash/Silverlight
+			});
+
+			uploader.init();
+		});
+
+	</script>
+
+{% endblock %}
+
+{% block content %}
+
+	<section class="m-model-new">
+
+		<form method="post" action="/manager/model/create">
+
+			{% if model.id %}
+				<input type="hidden" name="editMode" value="true"/>
+				<input type="hidden" name="modelId" value="{{ model.id }}"/>
+			{% endif %}
+
+			<fieldset>
+				<legend>Основное</legend>
+				<input type="text" name="name" value="{{ model.name }}" placeholder="Полное название модели мотоцикла (Suzuki GSX-R 600 2008)" required="true"/>
+				<input type="text" name="year" value="{{ model.year }}" placeholder="Год выпуска мотоцикла (2008)" required="true"/>
+			</fieldset>
+
+			<fieldset>
+				<legend>Фотографии</legend>
+
+				<div class="m-model-images"></div>
+				<div class="clearfix"></div>
+
+				<input type="button" value="добавить фотки" id="m-photo-add"/>
+			</fieldset>
+
+			<fieldset>
+				<legend>Двигатель и привод</legend>
+
+				<input type="text" name="engineType" placeholder="Тип двигателя"/>
+				<input type="text" name="cycleCount" placeholder="Число тактов (2,4)"/>
+				<input type="text" name="engineVolume" placeholder="Объем двигателя, см3"/>
+				<input type="text" name="cylinderCount" placeholder="Количество цилиндров"/>
+
+				<input type="text" name="fuelSystem" placeholder="Топливная система"/>
+				<input type="text" name="coolingSystem" placeholder="Система охлаждения"/>
+				<input type="text" name="ignition" placeholder="Зажигание"/>
+				<input type="text" name="fuelControl" placeholder="Контроль топлива"/>
+				<input type="text" name="clutch" placeholder="Сцепление"/>
+				<input type="text" name="transmission" placeholder="Коробка передач"/>
+				<input type="text" name="drive" placeholder="Привод"/>
+			</fieldset>
+
+			<fieldset>
+				<legend>Ходовая часть</legend>
+
+				<input type="text" name="frontSuspension" placeholder="Передняя подвеска"/>
+				<input type="text" name="frontSuspensionTravel" placeholder="Ход передней подвески"/>
+				<input type="text" name="rearSuspension" placeholder="Задняя подвеска"/>
+				<input type="text" name="wheels" placeholder="Диски"/>
+
+				<input type="text" name="frontWheelDimension" placeholder="Размерность переднего колеса"/>
+				<input type="text" name="rearWheelDimension" placeholder="Размерность заднего колеса"/>
+				<input type="text" name="frontBrake" placeholder="Передний тормоз"/>
+				<input type="text" name="rearBrake" placeholder="Задний тормоз"/>
+				<input type="text" name="rearBrakeDiameter" placeholder="Диаметр заднего тормоза"/>
+
+			</fieldset>
+
+			<fieldset>
+				<legend>Массо-габаритные характеристики</legend>
+
+				<input type="text" name="length" placeholder="Длина (мм)"/>
+
+				<input type="text" name="width" placeholder="Ширина (мм)"/>
+				<input type="text" name="height" placeholder="Высота (мм)"/>
+
+				<input type="text" name="seatHeight" placeholder="Высота по седлу (мм)"/>
+				<input type="text" name="minClearance" placeholder="Минимальный дорожный просвет (мм)"/>
+				<input type="text" name="wheelbase" placeholder="Колесная база (мм)"/>
+				<input type="text" name="fuelCapacity" placeholder="Вместимость бензобака (в литрах)"/>
+
+			</fieldset>
+
+
+
+
+			<input type="submit" value="Сохранить"/>
+
+		</form>
+
+	</section>
+
+{% endblock %}

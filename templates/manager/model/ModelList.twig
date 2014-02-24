@@ -1,0 +1,50 @@
+{% extends '/Generic.twig' %}
+
+{% block head %}
+
+	<script type="text/javascript">
+		$(function () {
+
+			$('a[data-action=remove]').on('click', function () {
+
+				var $this = $(this);
+				var $trParent = $this.closest('tr');
+
+				var params = {
+					modelId: $trParent.attr('data-model-id')
+				};
+
+				var handler = function (response) {
+					$trParent.fadeOut('slow');
+				};
+
+				$.post('/manager/ajax/model/remove', params, 'json').done(handler);
+
+			});
+
+		});
+	</script>
+
+{% endblock %}
+
+{% block content %}
+
+	<section class="m-model-list">
+
+		{{ dump(models) }}
+
+		<table>
+
+			{% for model in models %}
+
+				<tr data-model-id="{{ model.id }}">
+					<td><strong><a href="/manager/model/{{ model.id }}">{{ model.name|e }}</a></strong></td>
+					<td><a href="#" data-action="remove">Удалить нах</a></td>
+				</tr>
+
+			{% endfor %}
+		</table>
+
+	</section>
+
+{% endblock %}

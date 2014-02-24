@@ -3,7 +3,7 @@
 ##
 
 # Local directory to be realtime-replicated.
-local = C:/dev/phpstorm/Motogid
+local = F:/dev/phpstormProjects/motogid
 
 # Remote host to replicate to over SSH.
 host = motogid.loc
@@ -14,10 +14,6 @@ user = ak
 # Directory at the remote host to replicate files to.
 remote = /data/sites/motogid
 
-# Pathname wildcards to be excluded from the replication.
-# Use "*" for any filename character and "**" for any character,
-# including "/" in pathnames.
-
 exclude = composer.lock
 exclude = composer.phar
 
@@ -25,7 +21,11 @@ exclude = /vendor
 exclude = /vendor/
 exclude = /vendor/*
 exclude = /vendor/**
-exclude = /logs**
+
+exclude = /logs
+exclude = /logs/
+exclude = /logs/*
+exclude = /logs/**
 
 exclude = .realsync
 exclude = CVS

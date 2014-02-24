@@ -30,16 +30,22 @@ class Application extends Slim {
 
 		$this->view(new Twig());
 
+		$cacheDir = realpath(__DIR__ . '/../var/cache/twig');
+
+		if (!is_dir($cacheDir)){
+			mkdir($cacheDir,0777,true);
+		}
+
 		$this->view->parserOptions = array_merge($options, [
 			'charset' => 'utf-8',
-			'cache' => realpath('../templates/cache'),
+			'cache' => realpath('../var/cache/twig'),
 			'auto_reload' => true,
 			'strict_variables' => false,
 			'autoescape' => false
 		]);
 
-		$this->view->parserExtensions = array(new TwigExtension());
 
+		$this->view->parserExtensions = array(new TwigExtension(),new \Twig_Extension_Debug());
 	}
 
 	protected function registerController(ControllerInterface $controllerObject) {
